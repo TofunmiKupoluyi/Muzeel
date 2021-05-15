@@ -24,7 +24,4 @@ In "scripts/eliminate" folder, put the sites you want to cache in the site_list 
 
 python3 eliminate.py dbName dbHost dbUser dbPassword dbPort cacheDirectory __port_of_read_proxy
 
-In the above example __port_of_read_proxy is set to 9101
-
-
-node lacuna.js __url__ --dbName="deadcode" --dbHost="127.0.0.1" --dbUser="root" --dbPassword="password" --dbPort="3306" --cacheDirectory="/Users/tofunmi/Documents/Lacuna/proxies/data/" --proxy="127.0.0.1"
+In the above example __port_of_read_proxy is set to 9101. Be sure to end the cache directory in "/" and start with "/" if you're using absolute path.
