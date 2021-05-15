@@ -14,6 +14,7 @@ const argument_parser = require('command-line-args'),
       path = require('path'),
       csv_factory = require('./csv.js'),
       jdce = require('./jdce.js');
+	  DBModelMySql = require('./db_mysql');
 
 
 // Get command line arguments.
@@ -24,13 +25,31 @@ try
 	options = argument_parser(
 	[
 		{ name: 'directory', type: String },
+
 		{ name: 'url', type: String, defaultOption: true },
+
+		{name: 'dbName', type: String},
+
+		{name: 'dbHost', type: String},
+
+		{name: 'dbUser', type: String},
+
+		{name: 'dbPassword', type: String},
+
+		{name: 'dbPort', type: Number},
+
+		{name: 'cacheDirectory', type: String},
+
+		{name: 'proxy', type: String},
+
 		{ name: 'index', type: String, alias: 'i' },
 
 		{ name: 'csv', type: Boolean, alias: 'c' },
+
 		{ name: 'csvfile', type: String, alias: 'f' },
 
 		{ name: 'graph', type: Boolean, alias: 'g' },
+
 		{ name: 'graphfile', type: String, alias: 'd' },
 
 		{ name: 'verbose', type: Boolean, alias: 'v' },
@@ -93,6 +112,15 @@ let csv = new csv_factory(settings.csvfile, function(data)
 
 try
 {
+	DBModelMySql.connect({
+		host: settings.dbHost,
+		user: settings.dbUser,
+		port: settings.dbPort,
+		password: settings.dbPassword,
+		database: settings.dbName,
+		cacheDirectory: settings.cacheDirectory,
+		autocommit:true
+	});
 	// Run the JDCE.
 	jdce.run({
 		directory: settings.directory,
@@ -104,7 +132,13 @@ try
 		show_disconnected: settings.entire,
 		timeout: settings.timeout,
 		pace: settings.pace,
-		missteps: settings.missteps
+		missteps: settings.missteps,
+		dbName: settings.dbName,
+		dbPassword: settings.dbPassword,
+		dbHost: settings.dbHost,
+		dbPort: settings.dbPort,
+		dbUser: settings.dbUser,
+		proxy: settings.proxy
 	}, function(results)
 	{
 		// If the CSV option was set, output result data to the csv file (see 'csv' above).
@@ -123,10 +157,9 @@ try
 		{
 			// Don't show graph DOT string in output
 			delete results.graph;
-
-			console.log(results);
 		}
 		console.log("Analysis complete");
+		process.exit(1);
 	});
 	// Keep waiting
 	process.stdin.resume();
