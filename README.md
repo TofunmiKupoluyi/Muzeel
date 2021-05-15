@@ -1,6 +1,6 @@
 # Muzeel
 
-## First start the cache and read proxy:
+## First start the cache and read proxies:
 
 In "proxies" folder, run:
 
@@ -10,7 +10,7 @@ In "proxies" folder, run:
 
 The cache directory option is where the proxy will cache the page, it defaults to the "data/" directory of current folder but you can set to any folder. Be sure to end the cache directory with "/".
 
-## Next, cache the page you want to run dce on
+## Next, cache the pages you want to run dce on
 
 In "scripts/cache" folder, put the sites you want to cache in the site_list file (newline separated) and then run:
 
@@ -20,7 +20,7 @@ In above example, the port of cache proxy is set to 9100
 
 ## Next, run dce
 
-In "scripts/eliminate" folder, put the sites you want to cache in the site_list file (newline separated) and then run:
+In "scripts/eliminate" folder, put the sites you want to run in the site_list file (newline separated) and then run:
 
 ```python3 eliminate.py dbName dbHost dbUser dbPassword dbPort cacheDirectory __port_of_read_proxy```
 
