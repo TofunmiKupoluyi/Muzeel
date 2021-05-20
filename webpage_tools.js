@@ -3,29 +3,8 @@
 	Niels Groot Obbink
 */
 
-const path = require('path'),
-      file_system = require('fs'),
-      cheerio = require('cheerio'),
-	  esprima = require('esprima');
+const esprima = require('esprima');
 	  DBModelMySql = require('./db_mysql');
-
-
-
-function is_valid_type(type)
-{
-	const valid_types = ['text/javascript', 'application/javascript', 'application/ecmascript', 'text/ecmascript'];
-
-	valid_types.forEach(function(entry)
-	{
-		if(type.indexOf(type) != -1)
-		{
-			return true;
-		}
-	});
-
-	return false;
-}
-
 
 function get_functions(entry)
 {
@@ -33,7 +12,7 @@ function get_functions(entry)
 	let source_code = entry.source;
 
 	// Parse the source code, retrieve function nodes including range data.
-	esprima.parse(source_code, {range: true}, function(node)
+	esprima.parseModule(source_code, {range: true, tolerant: true}, function(node)
 	{
 		// We are only interested in functions (declarations and expressions).
 		if(node.type == 'FunctionDeclaration' || node.type == 'FunctionExpression')

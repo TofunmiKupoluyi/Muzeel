@@ -28,7 +28,7 @@ module.exports = function()
 	this.load = async function(url, proxy, timeout, success)
 	{
         this.logFile = `${__dirname}/logs/${this.generateLogFile(10)}`;
-		this.executeTestScript = spawn('java', ['-jar', __dirname+'/browser_run_load.jar', url, this.logFile, proxy], {stdio: ['inherit', 'inherit', 'inherit']});
+		this.executeTestScript = spawn('java', ['-jar', __dirname+'/browser_run.jar', url, this.logFile, proxy], {stdio: ['inherit', 'inherit', 'inherit']});
         this.executeTestScript.on('exit', (code) => {
             console.log(`child process exited with code ${code}`);
             if (code == 1) {

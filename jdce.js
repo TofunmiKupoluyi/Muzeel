@@ -188,6 +188,7 @@ module.exports =
 		};
 
 		// Retrieve all scripts in this page (ordered based on execution order).
+		console.log(settings)
 		let scripts = webpage_tools.get_scripts( settings.url );
 		stats.js_files = scripts.length;
 

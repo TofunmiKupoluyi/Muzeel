@@ -88,7 +88,7 @@ module.exports = function()
 		let last_function = null;
 		
 		try {
-			esprima.parseModule(source, {range: true}, function(node, meta)
+			esprima.parseModule(source, {range: true, tolerant: true}, function(node, meta)
 			{
 				// We are only interested in functions (declarations and expressions).
 				if(node.type == 'FunctionDeclaration' || node.type == 'FunctionExpression')

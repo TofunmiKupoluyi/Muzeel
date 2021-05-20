@@ -11,14 +11,15 @@ offset_start_file.close()
 
 site_list = open("site_list", "r").read().split("\n")
 no_of_sites = len(site_list)-offset_start
-for in_i, i in enumerate(site_list[offset_start:]):
+for in_i, i in enumerate(site_list):
     url = i
     init_url_file = open("../../proxies/read_proxy_initiating_url", "w")
     init_url_file.write(url)
     init_url_file.close()
     print("Running DCE for ", in_i+1, "of", no_of_sites, ":", url)
     start = timeit.default_timer()
-    subprocess.run("node lacuna.js {} --dbName=\"{}\" --dbHost=\"{}\" --dbUser=\"{}\" --dbPassword=\"{}\" --dbPort=\"{}\" --cacheDirectory=\"{}\" --proxy=\"127.0.0.1:{}\"".format(*sys.argv[1:]).split(" "))
+    print(sys.argv[1:])
+    subprocess.run("node ../../lacuna.js {} --dbName={} --dbHost={} --dbUser={} --dbPassword={} --dbPort={} --cacheDirectory={} --proxy=127.0.0.1:{}".format(i, *(sys.argv[1:])).split(" "))
     stop = timeit.default_timer()
     track_file.write(url+", "+str(stop-start)+"\n")
     track_file.flush()
